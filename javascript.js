@@ -1,4 +1,5 @@
 const divc = document.getElementById('container')
+let rgbEnabled = false 
 
 function makegrid(squareperside){
     divc.innerHTML = ''
@@ -10,10 +11,14 @@ function makegrid(squareperside){
         grid.style.height = `${boxsize}px`
         
 
-        grid.addEventListener('mouseover', () => {
-            grid.classList.add('color')
+        grid.addEventListener('mouseover', () => basiccolor(grid))
 
-        })
+        grid.addEventListener('mouseover', () => {
+            if (rgbEnabled) {
+                const randomColor = GenerateRandomColor();
+                grid.style.backgroundColor = randomColor;
+            }
+        }),
 
         divc.appendChild(grid);
     }
@@ -30,9 +35,29 @@ function createnewgrid(){
 
 }
 
+function ToggleRGB(){
+rgbEnabled = !rgbEnabled
+alert(`RGB is nog ${rgbEnabled ? 'enabled' : 'disabled'}`)
+}
+
+function GenerateRandomColor(){
+    const r = Math.floor(Math.random() * 256)
+    const g = Math.floor(Math.random() * 256)
+    const b = Math.floor(Math.random() * 256)
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
+function basiccolor(grid){
+    grid.style.backgroundColor = "blue"
+
+}
 
 const btn = document.getElementById('gridbutton')
 btn.addEventListener('click', () => createnewgrid())
+
+const colorbtn = document.getElementById('RGB')
+colorbtn.addEventListener('click', () => ToggleRGB())
+
 
 
 makegrid(16)
